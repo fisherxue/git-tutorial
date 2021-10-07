@@ -21,6 +21,7 @@ Git is a _distributed system_, where each local instance of a Git repository has
 `git pull` is the command that will integrate or _merge_ changes from the remote repository into your code. 
 
 <fig>
+Figure demonstrating how a push updates local/remote on a Git graph
 
 This typically will result in conflicts and force you to resolve _merge conflicts_. Merge conflicts will appear as this when running `git pull`: 
 
@@ -35,6 +36,7 @@ We cover how to resolve merge conflicts in section **Git Merging**
 `git push` is the command used to update the remote repository from code with your local repository. 
 
 <fig>
+Figure demonstrating how a push updates local/remote on a Git graph
 
 If someone else has committed to that branch after you last pulled from that branch, you may get the following problem: 
 
@@ -57,6 +59,7 @@ In Git, changes can exist in four states:
 4. Staged (files are in the staging area)
 
 <fig>
+Figure demonstrating how changes move between the four states in Git
 
 `git status` is the command used to check which (untracked, modified) changes have been made in your local repository. It will return something like:
 
@@ -103,6 +106,9 @@ Merging tends to be the most challenging part of learning the Git workflow. Merg
 
 `git merge <branch name>` is used when you would like to merge changes from another branch (`<branch name>`) into your branch. 
 
+<fig>
+Figure demonstrating how merges look in a Git graph
+
 Merges can fail in two ways:
 
 1. there are uncommitted local changes. Uncommitted local changes are easy to fix in Git. 
@@ -133,3 +139,28 @@ Unmerged paths:
 `git status` is a helpful command for resolving merges, as it will describe which files you still need to merge. 
 
 `git push --force` is the command used to force the remote repository to update with the state of your local repository. This will overwrite the remote repository's history with your local repository and skip all merge steps. **AVOID USING THIS UNLESS YOU KNOW WHAT YOU ARE DOING**
+
+
+# Troubleshooting Git
+## Avoiding Build Files in Git
+Have you ever noticed that your Git repository is filled with auto-generated files from your IDE or files that are too big to push? 
+
+Create a `.gitignore` in the top-level directory of your Git repository. Inside, you can list which files you would like Git to ignore from now on. 
+
+To update your repository to listen to the new `.gitignore`, you can do the following:
+
+```
+git rm -r --cached . # remove cache of all files
+git add . # add all files (except ones ignored)
+```
+
+## Amending Commits
+Sometimes you mess up a commit message or forget to add a file to a commit. Don't panic!
+
+```
+git add <forgotten file>
+git commit --amend
+git push
+```
+
+will allow you to change your previous commits
